@@ -1,0 +1,76 @@
+/* <![CDATA[ */
+
+
+body {
+    background: white;
+}
+div.pic h3 { 
+    font-size: 11pt;
+    margin: 0.5em 1em 0.2em 1em;
+}
+div.pic p {
+    font-size: 11pt;
+    margin: 0.2em 1em 0.1em 1em;
+}
+
+div.pic {
+    display: block;
+       	background: white;
+    float: left;
+    border : 2px dashed #466603;
+    margin : 0.5ex;
+    padding : 0;
+    -moz-border-radius: 2ex;
+    -webkit-border-radius: 2ex;
+    -khtml-border-radius: 2ex;
+    border-radius: 2ex;
+    -moz-box-shadow: 7px 5px 5px rgb(80,80,80);    /* Firefox 3.5 */
+    -webkit-box-shadow: 7px 5px 5px rgb(80,80,80); /* Chrome, Safari */
+    box-shadow: 7px 5px 5px rgb(80,80,80);         /* New browsers */  
+    text-align: center;
+    position:relative;
+}
+
+div.dirlinks h2 {  margin-bottom: 4pt; margin-left: -24pt; color: rgb(80,0,0);  }
+div.dirlinks {  margin: 0 24pt; } 
+div.dirlinks a {
+    font-size: 11pt; font-weight: bold;
+    padding: 0 0.5em; 
+}
+.button:hover { cursor : pointer; }
+.txt_cont {
+    display : none;
+    white-space:pre-wrap;
+    position: absolute;
+    bottom : 3ex;
+    background : white;
+    border : 2px dashed #466603;
+}
+.txt:hover  .txt_cont {
+    display : block;
+}
+.txt_cont:hover{
+    display : block;
+}
+
+img {
+    width : 40ex;
+    border-color : #466603;
+    border : 2px dashed #466603;
+    margin : 0.5ex;
+    padding : 0;
+    -moz-border-radius: 2ex;
+    -webkit-border-radius: 2ex;
+    -khtml-border-radius: 2ex;
+    border-radius: 2ex;
+}
+
+img:hover {
+    cursor : ne-resize; 
+}
+
+img.wide:hover {
+    cursor : sw-resize; 
+}
+
+/* ]]> */

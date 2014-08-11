@@ -1,0 +1,22 @@
+## CERN Signle sign-on
+## 
+ShibRequireAll On
+ShibRequireSession On
+ShibExportAssertion On
+SSLRequireSSL
+AuthType Shibboleth
+
+SSLVerifyClient optional
+SSLVerifyDepth 5
+SSLOptions +StrictRequire
+
+# Restrict access 
+# Require adfs-group "cms-private"
+
+## END CERN SSO
+
+## Tell Apache this is the web index
+##
+# Put below the path to your index.php (starting from the server root)
+# eg /musella/higgs/index.php
+DirectoryIndex index.php index.html index.htm /<me>/<my-project>/index.php
