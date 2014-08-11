@@ -17,6 +17,7 @@ $folder = str_replace($_SERVER['DOCUMENT_ROOT'],"",
 	);
 $script_path = str_replace($_SERVER['DOCUMENT_ROOT'],"",dirname($_SERVER["SCRIPT_FILENAME"]));
 $target_folder = str_replace($script_path,getcwd(),$folder);
+$script_path = str_replace("//","/","/".$script_path);
 chdir( $target_folder  )
 ?>
 

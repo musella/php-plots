@@ -3,14 +3,13 @@ php-plots
 
 PHP based web index for image displaying.
 
-Original code from Giovanni Petrucciani (@gpetrucc).
+Original code from Giovanni Petrucciani (@gpetruc).
 
 This project contains a PHP web index script to help visualizing folders with many images.
 
 It is tailored to people working in High Energy Physics that use ROOT (http://root.cern.ch) to produce their plots.
 
-
-# How to set it up
+# Setup
 
 1. cd into your web folder
 
@@ -30,4 +29,17 @@ It is tailored to people working in High Energy Physics that use ROOT (http://ro
 1. Enjoy.
 
 
+# Features
+
+1. Detect if a file is present with multiple formats.
+
+1. Filter files to be selected with wild-cards or regex.
+
+1. Zoom in/out images with double-click.
+
+1. Rearrange images with drag and drop.
+
+1. Overlay content of .txt version on mouse hover.
+
+# Example
 
