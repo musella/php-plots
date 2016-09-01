@@ -15,7 +15,7 @@ It is tailored to people working in High Energy Physics that use ROOT (http://ro
 
         cd <my-path>
         
-1. Clone this repository (and ita submodule jsroot)
+1. Clone this repository (and its submodule jsroot)
 
         git clone --recursive https://github.com/musella/php-plots.git .
         
@@ -24,7 +24,7 @@ It is tailored to people working in High Energy Physics that use ROOT (http://ro
         cp -p example/htaccess .htaccess
         $EDITOR .htacces
 
-1. Copy res/ jsroot/ and index.php into your web page top directory.
+1. Copy res/  jsroot/ and index.php into your web page top directory.
 
         cp -r res/ /path/to/www/
         cp -r jsroot/ /path/to/www/
