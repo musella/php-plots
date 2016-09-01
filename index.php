@@ -179,16 +179,29 @@ if ($_GET['noplots']) {
 		// print "<a href=\"$filename\">";
 		print "<img src=\"$imgname\" style=\"border: none; width: 40ex; \">";
 		// print "</a>";
-		foreach ($other_exts as $ex) {
-			$other_filename = $path_parts['filename'].$ex;
-			if (file_exists($other_filename)) {
-				if ($ex != '.txt') { 
-					array_push($others, "<a class=\"file\" href=\"$other_filename\">[" . $ex . "]</a>");
-					array_push($displayed, $other_filename); 
-				} else {
+		                                         foreach ($other_exts as $ex) {
+			                                 $other_filename = $path_parts['filename'].$ex;
+			                                 if (file_exists($other_filename)) {
+                                                         switch ($ex) {
+                                                         case '.txt':                                                         
 					$text = file_get_contents($other_filename);
-					array_push($others, "<span class=\"txt\"><a class=\"file\" href=\"$other_filename\">[" . $ex . "]</a><span class=\"txt_cont\">". $text ."</span></span>");
-									
+					                 array_push($others, "<span class=\"txt\"><a class=\"file\" href=\"$other_filename\">[" . $ex . "]</a><span class=\"txt_cont\">". $text ."</span></span>");
+                                                         break;
+                                                         case '.root':
+                                                         $pruned_uri = $_SERVER['REQUEST_URI'];
+                                                         if( $_SERVER['QUERY_STRING'] ) {
+	                                                 $pos = strpos($_SERVER['REQUEST_URI'], $_SERVER['QUERY_STRING']);
+	                                                 $pruned_uri = substr($_SERVER['REQUEST_URI'],0,$pos-1);
+                                                         }
+                                                         $folder = str_replace($_SERVER['DOCUMENT_ROOT'],"",
+		                                         str_replace("index.php","",$pruned_uri)
+	                                                 );
+					                 array_push($others, "<a href=https://spigazzi.web.cern.ch/spigazzi/jsroot/index.htm?file=$folder$other_filename>[" . $ex . "]</a>");
+					                 array_push($displayed, $other_filename);
+                                                         break;
+                                                         default :
+					array_push($others, "<a class=\"file\" href=\"$other_filename\">[" . $ex . "]</a>");
+					                 array_push($displayed, $other_filename);
 				}
 			}
 		}
@@ -202,7 +215,7 @@ if ($_GET['noplots']) {
 <div style="display: block; clear:both;">
 <h2><a name="files">Other files</a></h2>
 <ul>
-<?php
+<?
 foreach ($allfiles as $filename) {
     if ($_GET['noplots'] || !in_array($filename, $displayed)) {
 	    /// if (isset($_GET['match']) && !fnmatch('*'.$_GET['match'].'*', $filename)) continue;
