@@ -226,8 +226,9 @@ foreach ($allfiles as $filename) {
 	if ( substr($filename,-1) == "~" ) continue;
         if (is_dir($filename)) {
 		// print "<li>[DIR] <a href=\"$filename\">$filename</a></li>";
-        } else {
-            print "<li><a href=\"$filename\">$filename</a></li>";
+   } else {
+   print "<li><a href=\"https://spigazzi.web.cern.ch/spigazzi/jsroot/index.htm?file=$folder/$filename\">$filename</a></li>";
+   # print "<li><a href=\"$filename\">$filename</a></li>";
         }
     }
 }
