@@ -15,15 +15,21 @@ It is tailored to people working in High Energy Physics that use ROOT (http://ro
 
         cd <my-path>
         
-1. Clone this repository
+1. Clone this repository (and its submodule jsroot)
 
-        git clone https://github.com/musella/php-plots.git .
+        git clone --recursive https://github.com/musella/php-plots.git .
         
 1. Copy the example/htaccess file into .htaccess and edit its content to suit your needs.
  
         cp -p example/htaccess .htaccess
         $EDITOR .htacces
 
+1. Copy res/  jsroot/ and index.php into your web page top directory.
+
+        cp -r res/ /path/to/www/
+        cp -r jsroot/ /path/to/www/
+        cp index.php /path/to/www/
+        
 1. Open the web folder into your browser.
 
 1. Enjoy.
