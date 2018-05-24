@@ -1,0 +1,3 @@
+[submodule "jsroot"]
+	path = jsroot
+	url = git@github.com:linev/jsroot.git
