@@ -7,6 +7,55 @@ function isRegex($str0) {
 }
 function matchall($match,$name) { return true; }
 
+/**
+ * Renders a link.
+ */
+function bookmark($url,$name,$target="_blank",$opentag="<td>",$closetag="</td>")
+{
+        $ret = "";
+	if ( $opentag != "" ) $ret .= $opentag;
+	$encurl = $url;
+	$ret .= "[<a href=\"$encurl\" target=\"$target\">$name</a>]";
+	if ( $closetag != "" ) $ret .= $closetag;
+        return $ret;
+}
+
+function resource($url,$name)
+{
+         return bookmark($url, $name, "_blank", "", "");
+}
+
+
+/**
+ * Reads a list of links from a file and renders them.
+ *
+ * The expected file format is
+ * url && linkname 
+ */
+function get_bookmarks($filename,$target="_blank",$rowlen=12,$opentable="<table>",$closetable="</table>",$openrow="<tr>",$closerow="</tr>",$opencell="<td>",$closecell="</td>")
+{
+	$file = file_get_contents($filename);
+	$bookmarks=split("\n",$file);
+  
+        $ret = $opentable;
+        $n = 1;
+        foreach( $bookmarks as $bm ) {
+                 if( $bm == "" ) { continue; }
+		 list($url,$name) = split("[ ]*&&[ ]*",$bm);
+        	 if( ! empty($url) ) {
+      	     	     if( $rowlen > 0 && $n % $rowlen == 1 ) { $ret .= $openrow; }
+     	     	     $ret .= bookmark( $url, $name, $target, $opencell, $closecell );
+      	     	     if( $rowlen > 0 && $n % $rowlen == 0 ) { $ret .= $closerow; }
+      	     	     $n++;
+        	 }
+        }
+        if( $rowlen > 0 && $n % $rowlen != 1 ) { $ret .= $closerow; }
+        $ret .= $closetable;
+        return $ret;
+}
+
+
+
 $pruned_uri = $_SERVER['REQUEST_URI'];
 if( $_SERVER['QUERY_STRING'] ) {
 	$pos = strpos($_SERVER['REQUEST_URI'], $_SERVER['QUERY_STRING']);
@@ -90,6 +139,22 @@ foreach (array("00_README.txt", "README.txt", "readme.txt") as $readme) {
         print "<pre class='readme'>\n"; readfile($readme); print "</pre>";
     }
 }
+
+$bookm="";
+foreach (array("bookmarks.txt") as $bm) {
+    if (file_exists($bm)) {
+	    if( $bookm == "" ) {
+		    $bookm .= '<h2><a name="bookmarks">Bookmarks</a></h2>';
+	    }
+	    $bookm .= get_bookmarks($bm,"",10,"","","","<br/>","","");
+    }
+}
+if( $bookm != "" ) {
+    print "<div class=\"dirlinks\">\n";
+    print $bookm;
+    print "</div>";
+}
+
 ?>
 
 <h2><a name="plots">Plots</a></h2>
@@ -159,7 +224,7 @@ if ($_GET['noplots']) {
 		if( $skip ) { continue; }
 		array_push($displayed, $filename);
 		$others = array();
-		$max=46;
+		$max=25;
 		$asym=2;
 		$len=strlen($filename);
 		if ($len >= $max) {
@@ -179,7 +244,7 @@ if ($_GET['noplots']) {
 		print "<img src=\"$imgname\" style=\"border: none; width: 40ex; \">";
 		// print "</a>";
 		foreach ($other_exts as $ex) {
-			$other_filename = $path_parts['filename'].$ex;
+			$other_filename = $path_parts['dirname']."/".$path_parts['filename'].$ex;
 			if (file_exists($other_filename)) {
 				if ($ex != '.txt') { 
 					array_push($others, "<a class=\"file\" href=\"$other_filename\">[" . $ex . "]</a>");
