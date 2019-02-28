@@ -1,1 +1,187 @@
-../../res/style.css
+/* <![CDATA[ */
+
+body {
+       left : 5%;
+       padding: 0px;
+       margin: 0px;
+       font-family: arial, helvetica;
+       font-weight: 600; 
+       font-size: 15px;
+       border-color : #2E457B;
+       color : #43307F;
+       background-image:url('background.png');
+       /* background : #DEF5AD; */
+	
+}
+
+#header {
+          text-align: center;
+          float: left; 
+          /*width: 50%;
+          padding-left: 12%; 
+             */
+          width: 76%;
+          padding-left: 12%;        
+          padding-top: 0.5ex;
+          color : #3B8686;
+}
+
+#footer {
+          text-align: left;
+          width: 76%;
+          padding-left: 12%;
+          padding-bottom: 0%;
+          clear: both;
+}
+
+#content {
+           text-align: left; 
+           float: left; 
+           width: 50%;
+           padding-left: 12%; 
+}
+
+#side {
+        text-align: left; 
+        padding-right: 12%; 
+        float: right; 
+        width: 25%;
+        padding-top: 1.5ex;
+}
+
+.box legend { 
+          color : #2E457B;
+          background : none;
+          -moz-border-radius: 2ex;
+          -webkit-border-radius: 2ex;
+          -khtml-border-radius: 2ex;
+          border-radius: 2ex;
+          padding: 0.5ex;
+          border : 2px solid #2E457B;
+} 
+
+a { 
+    color: #1B9898;
+    text-decoration:  none;
+}
+
+a:hover { 
+          color: #24CACA;
+          background: #1B9898;
+
+}
+
+hr.line {
+          width: 50%; 
+          height: 1px;
+}
+
+#content li { 
+     color : #3B8686; 
+     padding-bottom: 1ex;
+}
+
+#content li ul li { 
+           color : #43307F;
+           padding-bottom: 0.5ex;
+}
+
+li em { 
+     text-decoration : underline;
+     color: #246E6E;
+ }
+
+.highlight em {
+    color: #F0A000;
+}
+
+.box {
+       border-color : #2E457B;
+       border : 2px dashed #2E457B;
+       margin-bottom : 1.5ex;
+       -moz-border-radius: 2ex;
+       -webkit-border-radius: 2ex;
+       -khtml-border-radius: 2ex;
+       border-radius: 2ex;
+}
+
+.tbox {
+       border-color : #2E457B;
+       border : 2px dashed #2E457B;
+       margin : 0.5ex;
+       padding : 0;
+       -moz-border-radius: 2ex;
+       -webkit-border-radius: 2ex;
+       -khtml-border-radius: 2ex;
+       border-radius: 2ex;
+}
+
+.round {
+         border-color : #2E457B;
+         border : 2px dashed #2E457B;
+         -moz-border-radius: 0.5ex;
+         -webkit-border-radius: 2ex;
+         -khtml-border-radius: 2ex;
+         border-radius: 2ex;
+}
+
+
+#header a { 
+	color: inherit; 
+}
+
+#header a:hover { 
+	text-decoration : underline;
+	background : inherit;
+}
+
+.feed_description {
+     display : none;
+     color : #3B8686;
+     opacity: 1;
+     -moz-opacity:1;
+     position: absolute; 
+	top : inherit;
+	left : 70%;
+	width : 30%;
+     background : #FFFFFF;
+     padding : 0.5ex;	 
+         border-color : #2E457B;
+         border : 2px solid #2E457B;
+         -moz-border-radius: 0.5ex;
+         -webkit-border-radius: 2ex;
+         -khtml-border-radius: 2ex;
+         border-radius: 2ex;
+}
+
+#navbar a { 
+              color: orange;
+}
+
+.feed_description img {
+	width : 100%;
+}
+
+.feed:hover {
+        color: #24CACA;
+	background: #1B9898;
+}
+
+.feed:hover  .feed_description {
+	display : block;
+}
+
+.feed_description:hover{
+	display : block;
+}
+
+.rnd_feed {
+    height : 10%;
+}
+
+code {   
+       color: #bdc820;
+}
+
+/* ]]> */
+

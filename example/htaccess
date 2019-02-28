@@ -1,16 +1,17 @@
 ## CERN Signle sign-on
-## 
-ShibRequireAll On
-ShibRequireSession On
-ShibExportAssertion On
-SSLRequireSSL
-AuthType Shibboleth
-
-SSLVerifyClient optional
-SSLVerifyDepth 5
-SSLOptions +StrictRequire
-
-# Restrict access 
+## Uncomment if you want to restrict the access to your files
+#
+# ShibRequireAll On
+# ShibRequireSession On
+# ShibExportAssertion On
+# SSLRequireSSL
+# AuthType Shibboleth
+# 
+# SSLVerifyClient optional
+# SSLVerifyDepth 5
+# SSLOptions +StrictRequire
+# 
+# # Authorized group 
 # Require adfs-group "cms-private"
 
 ## END CERN SSO

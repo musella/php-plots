@@ -66,6 +66,7 @@ $folder = str_replace($_SERVER['DOCUMENT_ROOT'],"",
 	);
 $script_path = str_replace($_SERVER['DOCUMENT_ROOT'],"",dirname($_SERVER["SCRIPT_FILENAME"]));
 $target_folder = str_replace($script_path,getcwd(),$folder);
+$script_path = str_replace("//","/","/".$script_path);
 chdir( $target_folder  )
 ?>
 
@@ -266,7 +267,7 @@ if ($_GET['noplots']) {
 <div style="display: block; clear:both;">
 <h2><a name="files">Other files</a></h2>
 <ul>
-<?
+<?php
 foreach ($allfiles as $filename) {
     if ($_GET['noplots'] || !in_array($filename, $displayed)) {
 	    /// if (isset($_GET['match']) && !fnmatch('*'.$_GET['match'].'*', $filename)) continue;
