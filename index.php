@@ -216,23 +216,29 @@ if ($_GET['noplots']) {
 <h2><a name="files">Other files</a></h2>
 <ul>
 <?
-foreach ($allfiles as $filename) {
-    if ($_GET['noplots'] || !in_array($filename, $displayed)) {
-	    /// if (isset($_GET['match']) && !fnmatch('*'.$_GET['match'].'*', $filename)) continue;
-	    if( ! $matchf($match,$filename) ) { continue; }
-	    if( fnmatch("*_thumb.*", $filename) ) {
-		    continue;
-	    }
-	if ( substr($filename,-1) == "~" ) continue;
-        if (is_dir($filename)) {
-		// print "<li>[DIR] <a href=\"$filename\">$filename</a></li>";
-   } else {
-   print "<li><a href=\"https://spigazzi.web.cern.ch/spigazzi/jsroot/index.htm?file=$folder/$filename\">$filename</a></li>";
-   # print "<li><a href=\"$filename\">$filename</a></li>";
-        }
-    }
-}
-?>
+   foreach ($allfiles as $filename) {
+   if ($_GET['noplots'] || !in_array($filename, $displayed))
+   {
+   /// if (isset($_GET['match']) && !fnmatch('*'.$_GET['match'].'*', $filename)) continue;
+       if( ! $matchf($match,$filename) ) { continue; }
+       if( fnmatch("*_thumb.*", $filename) ) { continue; }
+       if ( substr($filename,-1) == "~" ) continue;
+       if (is_dir($filename))
+       {
+           // print "<li>[DIR] <a href=\"$filename\">$filename</a></li>";
+       }
+       else
+       {
+           if( fnmatch("*.root", $filename) ) {
+               print "<li><a href=\"https://spigazzi.web.cern.ch/spigazzi/jsroot/index.htm?file=$folder/$filename\">$filename</a></li>";
+           }
+           else {
+                print "<li><a href=\"$filename\">$filename</a></li>";
+           }
+       }  
+   }
+   }
+   ?>
 </ul>
 </div>
 <p>
