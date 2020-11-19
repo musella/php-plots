@@ -7,18 +7,12 @@ function isRegex($str0) {
 }
 function matchall($match,$name) { return true; }
 
+$jsroot_instance = "/jsroot/index.htm";
 $pruned_uri = $_SERVER['REQUEST_URI'];
-if( $_SERVER['QUERY_STRING'] ) {
-	$pos = strpos($_SERVER['REQUEST_URI'], $_SERVER['QUERY_STRING']);
-	$pruned_uri = substr($_SERVER['REQUEST_URI'],0,$pos-1);
-}
-$folder = str_replace($_SERVER['DOCUMENT_ROOT'],"",
-		      str_replace("index.php","",$pruned_uri)
-	);
-$script_path = str_replace($_SERVER['DOCUMENT_ROOT'],"",dirname($_SERVER["SCRIPT_FILENAME"]));
-$target_folder = str_replace($script_path,getcwd(),$folder);
-$script_path = str_replace("//","/","/".$script_path);
-chdir( $target_folder  )
+$folder = str_replace($_SERVER['DOCUMENT_ROOT'], "", str_replace("index.php","",$pruned_uri));
+$target_folder = substr_replace($pruned_uri, $_SERVER['CONTEXT_DOCUMENT_ROOT'], 0, strlen($_SERVER['CONTEXT_PREFIX']));
+$script_path = substr_replace(dirname($_SERVER["SCRIPT_FILENAME"]), $_SERVER['CONTEXT_PREFIX'], 0, strlen($_SERVER['CONTEXT_DOCUMENT_ROOT']));
+chdir( $target_folder )
 ?>
 
 <link rel="stylesheet" type="text/css" href="<?php echo $script_path."/res/theme.css"; ?>" />
@@ -188,15 +182,7 @@ if ($_GET['noplots']) {
 					                 array_push($others, "<span class=\"txt\"><a class=\"file\" href=\"$other_filename\">[" . $ex . "]</a><span class=\"txt_cont\">". $text ."</span></span>");
                                                          break;
                                                          case '.root':
-                                                         $pruned_uri = $_SERVER['REQUEST_URI'];
-                                                         if( $_SERVER['QUERY_STRING'] ) {
-	                                                 $pos = strpos($_SERVER['REQUEST_URI'], $_SERVER['QUERY_STRING']);
-	                                                 $pruned_uri = substr($_SERVER['REQUEST_URI'],0,$pos-1);
-                                                         }
-                                                         $folder = str_replace($_SERVER['DOCUMENT_ROOT'],"",
-		                                         str_replace("index.php","",$pruned_uri)
-	                                                 );
-					                 array_push($others, "<a href=https://spigazzi.web.cern.ch/spigazzi/jsroot/index.htm?file=$folder$other_filename>[" . $ex . "]</a>");
+					                 array_push($others, "<a href=$jsroot_instance?file=$folder$other_filename>[" . $ex . "]</a>");
 					                 array_push($displayed, $other_filename);
                                                          break;
                                                          default :
@@ -230,7 +216,7 @@ if ($_GET['noplots']) {
        else
        {
            if( fnmatch("*.root", $filename) ) {
-               print "<li><a href=\"https://spigazzi.web.cern.ch/spigazzi/jsroot/index.htm?file=$folder/$filename\">$filename</a></li>";
+               print "<li><a href=\"$jsroot_instance?file=$folder/$filename\">$filename</a></li>";
            }
            else {
                 print "<li><a href=\"$filename\">$filename</a></li>";
