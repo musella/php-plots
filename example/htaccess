@@ -1,23 +1,56 @@
-## CERN Signle sign-on
-## Uncomment if you want to restrict the access to your files
+# *** This htaccess file has been modified automatically on November 16, 2020 ***
+# Due to the end-of-life of SLC6 and Apache 2.2, web sites get migrated to a new infrastructure running
+# CC7 and Apache 2.4. There are incompatible differences in web site configuration between these two versions.
+# Because this htaccess file contained such incompatibilities, it has been modified in a way that works on both
+# old and new infrastructures during the transition period (October-November 2020).
+# See https://cern.service-now.com/service-portal/?id=outage&n=OTG0059516
 #
-# ShibRequireAll On
-# ShibRequireSession On
-# ShibExportAssertion On
-# SSLRequireSSL
-# AuthType Shibboleth
-# 
-# SSLVerifyClient optional
-# SSLVerifyDepth 5
-# SSLOptions +StrictRequire
-# 
-# # Authorized group 
-# Require adfs-group "cms-private"
+# *** If you need to modify this file during the transition period, make sure to apply your changes to both sections
+# below. The site owner received an email with instructions to validate the web site configuration in the new
+# infrastructure. ***
 
-## END CERN SSO
+<IfVersion >= 2.3>
+# This section contains the Apache configuration directives used in the new webeos infrastructure running
+# Apache 2.4 on CC7
+
+Options +Indexes
+
+AuthType openid-connect
+Require claim cern_roles:view-site-root
 
 ## Tell Apache this is the web index
 ##
-# Put below the path to your index.php (starting from the server root)
-# eg /musella/higgs/index.php
-DirectoryIndex index.php index.html index.htm /<me>/<my-project>/index.php
+DirectoryIndex index.php index.html index.htm /spigazzi/index.php
+
+
+</IfVersion>
+
+<IfVersion < 2.3>
+# This section contains the Apache configuration directives used in the legacy webeos infrastructure running
+# Apache 2.2 on SLC6
+# It can be removed after December 2020 when https://cern.service-now.com/service-portal/?id=outage&n=OTG0059516 is complete.
+
+Options +Indexes
+
+
+
+ShibRequireAll On
+
+ShibRequireSession On
+
+ShibExportAssertion On
+
+SSLRequireSSL   # The modules only work using HTTPS
+
+AuthType Shibboleth
+
+
+
+Require adfs-group "cms-physics"
+
+## Tell Apache this is the web index
+##
+DirectoryIndex index.php index.html index.htm /spigazzi/index.php
+
+
+</IfVersion>
