@@ -8,7 +8,7 @@ function isRegex($str0) {
 function matchall($match,$name) { return true; }
 
 $jsroot_instance = "/jsroot/index.htm";
-$pruned_uri = $_SERVER['REQUEST_URI'];
+$pruned_uri = strtok($_SERVER['REQUEST_URI'], '?');
 $folder = str_replace($_SERVER['DOCUMENT_ROOT'], "", str_replace("index.php","",$pruned_uri));
 $target_folder = substr_replace($pruned_uri, $_SERVER['CONTEXT_DOCUMENT_ROOT'], 0, strlen($_SERVER['CONTEXT_PREFIX']));
 $script_path = substr_replace(dirname($_SERVER["SCRIPT_FILENAME"]), $_SERVER['CONTEXT_PREFIX'], 0, strlen($_SERVER['CONTEXT_DOCUMENT_ROOT']));
@@ -88,9 +88,8 @@ foreach (array("00_README.txt", "README.txt", "readme.txt") as $readme) {
 ?>
 
 <h2><a name="plots">Plots</a></h2>
-<p><form>Filter: <input type="text" name="match" size="30" 
-	value="<?php if (isset($_GET['match'])) print htmlspecialchars($_GET['match']);  ?>" />
-<input type="Submit" value="Go" />
+<p><form>Filter: <input type="text" name="match" size="30" value="<?php if (isset($_GET['match'])) print htmlspecialchars($_GET['match']);  ?>" />
+<input type="Submit" value="Go" /></form></p>
 <div class="numbers-row">
 <label for="name">Levels to show</label>
 <input name="depth" type="text" size="1" value="<?php if (isset($_GET['depth'])) { print htmlspecialchars($_GET['depth']); } else { print 1; } ?>" />
