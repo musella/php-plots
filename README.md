@@ -44,3 +44,15 @@ It is tailored to people working in High Energy Physics that use ROOT (http://ro
 # Example
 
 https://musella.web.cern.ch/musella/php-plots
+
+# Troubleshooting
+## Broken style
+Remember that the ```res``` folder should be copied in the same place as ```index.php```.
+
+## Links not correct, even when changing URL
+* With the new EOS websites, both ```https://[user].web.cern.ch/[user]/...``` and ```https://[user].web.cern.ch/...``` will work. However, only the latter should be used for ```php-plots``` to work.
+* It seems that the script is not working if placed at the root of the website. Instead, it should be placed into a directory (e.g. ```higgs```, together with ```res``` and ```.htaccess```), and it will apply to all its subdirectories (```https://[user].web.cern.ch/higgs/some/path```).
+  * If needed for another directory too (e.g. ```https://[user].web.cern.ch/otherdir/...```), files (```index.php```, ```res```, and ```.htaccess```) need to copied there too (adapting ```.htaccess``` accordingly).
+
+## Identification problems
+After the migration of personal and project web pages from AFS to EOS, the old way to restrict access to some pages (using ```.htaccess```, as in ```example/htaccess```) no longer works. Instead, a web interface (https://application-portal.web.cern.ch/) should be used, see also https://auth.docs.cern.ch/user-documentation/saml/shibboleth-migration/#configuration-for-cern-single-sign-on.
