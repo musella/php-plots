@@ -47,6 +47,7 @@ It is tailored to people working in High Energy Physics that use ROOT (http://ro
 
 1. Overlay content of .txt version on mouse hover.
 
-# Example
+1. Display root files using [JSROOT](https://root.cern.ch/js/)
 
-https://musella.web.cern.ch/musella/php-plots
+1. Display html interactive plots generated with [plotly](https://plotly.com/)
+
