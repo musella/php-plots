@@ -113,7 +113,7 @@ $displayed = array();
 if ($_GET['noplots']) {
     print "Plots will not be displayed.\n";
 } else {
-	$other_exts = array('.pdf', '.cxx', '.eps', '.ps', '.root', '.txt', ".C");
+	$other_exts = array('.pdf', '.cxx', '.eps', '.ps', '.root', '.txt', ".C", '.html');
 	$main_exts = array('.png','.gif','.jpg','.jpeg');
 	$folders = array('*');
 	if( intval($_GET['depth'])>1 ) {
