@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
 <?php 
 
 function isRegex($str0) {
@@ -7,12 +7,60 @@ function isRegex($str0) {
 }
 function matchall($match,$name) { return true; }
 
+/**
+ * Renders a link.
+ */
+function bookmark($url,$name,$target="_blank",$opentag="<td>",$closetag="</td>")
+{
+        $ret = "";
+	if ( $opentag != "" ) $ret .= $opentag;
+	$encurl = $url;
+	$ret .= "[<a href=\"$encurl\" target=\"$target\">$name</a>]";
+	if ( $closetag != "" ) $ret .= $closetag;
+        return $ret;
+}
+
+function resource($url,$name)
+{
+         return bookmark($url, $name, "_blank", "", "");
+}
+
+
+/**
+ * Reads a list of links from a file and renders them.
+ *
+ * The expected file format is
+ * url && linkname 
+ */
+function get_bookmarks($filename,$target="_blank",$rowlen=12,$opentable="<table>",$closetable="</table>",$openrow="<tr>",$closerow="</tr>",$opencell="<td>",$closecell="</td>")
+{
+	$file = file_get_contents($filename);
+	$bookmarks=split("\n",$file);
+  
+        $ret = $opentable;
+        $n = 1;
+        foreach( $bookmarks as $bm ) {
+                 if( $bm == "" ) { continue; }
+		 list($url,$name) = split("[ ]*&&[ ]*",$bm);
+        	 if( ! empty($url) ) {
+      	     	     if( $rowlen > 0 && $n % $rowlen == 1 ) { $ret .= $openrow; }
+     	     	     $ret .= bookmark( $url, $name, $target, $opencell, $closecell );
+      	     	     if( $rowlen > 0 && $n % $rowlen == 0 ) { $ret .= $closerow; }
+      	     	     $n++;
+        	 }
+        }
+        if( $rowlen > 0 && $n % $rowlen != 1 ) { $ret .= $closerow; }
+        $ret .= $closetable;
+        return $ret;
+}
+
 $jsroot_instance = "/jsroot/index.htm";
 $pruned_uri = strtok($_SERVER['REQUEST_URI'], '?');
 $folder = str_replace($_SERVER['DOCUMENT_ROOT'], "", str_replace("index.php","",$pruned_uri));
 $target_folder = substr_replace($pruned_uri, $_SERVER['CONTEXT_DOCUMENT_ROOT'], 0, strlen($_SERVER['CONTEXT_PREFIX']));
 $script_path = substr_replace(dirname($_SERVER["SCRIPT_FILENAME"]), $_SERVER['CONTEXT_PREFIX'], 0, strlen($_SERVER['CONTEXT_DOCUMENT_ROOT']));
 chdir( $target_folder )
+
 ?>
 
 <link rel="stylesheet" type="text/css" href="<?php echo $script_path."/res/theme.css"; ?>" />
@@ -55,15 +103,9 @@ $(function() {
 <?php print "<a href=\"../\">[parent]</a> "; ?>
 <?php
 $has_subs = false;
-$folders = array();
-$allfiles = glob("*");
-usort($allfiles, create_function('$a,$b', 'return filemtime($b) - filemtime($a);'));
-foreach ($allfiles as $filename) {
-	if (is_dir($filename)) {
-		$has_subs = true;
-		array_push( $folders, $filename);
-	}
-}
+$folders = glob("*",  GLOB_ONLYDIR);
+array_multisort(array_map('filemtime', $folders), SORT_NUMERIC, SORT_DESC, $folders);
+$has_subs = count($folders) > 0;
 
 if ($has_subs) {
     print "<div class=\"dirlinks\">\n";
@@ -74,6 +116,7 @@ if ($has_subs) {
 	    print " <a href=\"?".$_SERVER['QUERY_STRING']."&depth=1\">(hide plots in subfolders)</a>\n";
     }
     print "</h2>\n";
+    rsort($folders);
     foreach ($folders as $filename) {
 	    print " <a href=\"$filename\">[$filename]</a>";
     }
@@ -85,6 +128,22 @@ foreach (array("00_README.txt", "README.txt", "readme.txt") as $readme) {
         print "<pre class='readme'>\n"; readfile($readme); print "</pre>";
     }
 }
+
+$bookm="";
+foreach (array("bookmarks.txt") as $bm) {
+    if (file_exists($bm)) {
+	    if( $bookm == "" ) {
+		    $bookm .= '<h2><a name="bookmarks">Bookmarks</a></h2>';
+	    }
+	    $bookm .= get_bookmarks($bm,"",10,"","","","<br/>","","");
+    }
+}
+if( $bookm != "" ) {
+    print "<div class=\"dirlinks\">\n";
+    print $bookm;
+    print "</div>";
+}
+
 ?>
 
 <h2><a name="plots">Plots</a></h2>
@@ -153,7 +212,7 @@ if ($_GET['noplots']) {
 		if( $skip ) { continue; }
 		array_push($displayed, $filename);
 		$others = array();
-		$max=46;
+		$max=25;
 		$asym=2;
 		$len=strlen($filename);
 		if ($len >= $max) {
